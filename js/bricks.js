@@ -1,6 +1,6 @@
 import { ctx } from './main.js';
 import { largeBrickWidth, largeBrickHeight, largeBricks, largeBrickColumnCount, largeBrickRowCount, largeBrickPadding, largeBrickOffsetLeft, largeBrickOffsetTop} from './main.js';
-import { smallBrickWidth, smallBrickHeight, smallBricks, smallBrickColumnCount, smallBrickRowCount, smallBrickPadding, smallBrickOffsetLeft, smallBrickOffsetTop} from './main.js';
+// import { smallBrickWidth, smallBrickHeight, smallBricks, smallBrickColumnCount, smallBrickRowCount, smallBrickPadding, smallBrickOffsetLeft, smallBrickOffsetTop} from './main.js';
 
 
 
@@ -25,24 +25,24 @@ export default function drawLargeBricks() {
 }
 
 //draw small bricks
-export function drawSmallBricks() {
-    for(var c=0; c<smallBrickColumnCount; c++) {
-        for(var r=0; r<smallBrickRowCount; r++) {
-            if(smallBricks[c][r].status == 1){
-            var smallBrickX = (c*(smallBrickWidth+smallBrickPadding))+smallBrickOffsetLeft;
-            var smallBrickY = (r*(smallBrickHeight+smallBrickPadding))+smallBrickOffsetTop;
-            smallBricks[c][r].x = smallBrickX;
-            smallBricks[c][r].y = smallBrickY;
-            ctx.beginPath();
+// export function drawSmallBricks() {
+//     for(var c=0; c<smallBrickColumnCount; c++) {
+//         for(var r=0; r<smallBrickRowCount; r++) {
+//             if(smallBricks[c][r].status == 1){
+//             var smallBrickX = (c*(smallBrickWidth+smallBrickPadding))+smallBrickOffsetLeft;
+//             var smallBrickY = (r*(smallBrickHeight+smallBrickPadding))+smallBrickOffsetTop;
+//             smallBricks[c][r].x = smallBrickX;
+//             smallBricks[c][r].y = smallBrickY;
+//             ctx.beginPath();
             
-            ctx.rect(smallBrickX, smallBrickY, smallBrickWidth, smallBrickHeight);
-            ctx.fillStyle = "#247300";
-            ctx.fill();
-            ctx.closePath();
-            }
-        }
-    }
-}
+//             ctx.rect(smallBrickX, smallBrickY, smallBrickWidth, smallBrickHeight);
+//             ctx.fillStyle = "#247300";
+//             ctx.fill();
+//             ctx.closePath();
+//             }
+//         }
+//     }
+// }
 
 
 

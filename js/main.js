@@ -1,7 +1,7 @@
 import drawBall from "./ball.js";
 import drawPaddle from "./paddle.js";
 import drawLargeBricks from "./bricks.js";
-import { drawSmallBricks } from "./bricks.js";
+// import { drawSmallBricks } from "./bricks.js";
 import drawScore from "./score.js";
 import drawLives from "./lives.js";
 
@@ -38,24 +38,26 @@ var dy = -3;
 
 
 // // for large bricks
-export var largeBrickRowCount = 0;
-export var largeBrickColumnCount = 0;
-export var largeBrickWidth = 1000;
+export var largeBrickRowCount = 6;
+export var largeBrickColumnCount = 24;
+export var largeBrickWidth = 60;
 export var largeBrickHeight = 20;
 export var largeBrickPadding = 10;
 export var largeBrickOffsetTop = 30;
-export var largeBrickOffsetLeft = 14;
+export var largeBrickOffsetLeft = 24;
 export var largeBricks = [];
 
+var totalLargeBricks = largeBrickRowCount*largeBrickColumnCount;
+
 //for short bricks
-export var smallBrickRowCount = 1;
-export var smallBrickColumnCount = 1;
-export var smallBrickWidth = 2000;
-export var smallBrickHeight = 20;
-export var smallBrickPadding = 10;
-export var smallBrickOffsetTop = 210;
-export var smallBrickOffsetLeft = 25;
-export var smallBricks = [];
+// export var smallBrickRowCount = 1;
+// export var smallBrickColumnCount = 1;
+// export var smallBrickWidth = 2000;
+// export var smallBrickHeight = 20;
+// export var smallBrickPadding = 10;
+// export var smallBrickOffsetTop = 210;
+// export var smallBrickOffsetLeft = 25;
+// export var smallBricks = [];
 
 
 
@@ -114,7 +116,7 @@ export var score1 = 0;
 export var score2 = 0;
 
 //lives
-export var lives = 200000000000000000000000000;
+export var lives = 4;
 
 // for building  bricks
 for (var c = 0; c < largeBrickColumnCount; c++) {
@@ -124,12 +126,12 @@ for (var c = 0; c < largeBrickColumnCount; c++) {
     }
 }
 // for building smaller bricks
-for (var c = 0; c < smallBrickColumnCount; c++) {
-    smallBricks[c] = [];
-    for (var r = 0; r < smallBrickRowCount; r++) {
-        smallBricks[c][r] = { x: 0, y: 0, status: 1 };
-    }
-}
+// for (var c = 0; c < smallBrickColumnCount; c++) {
+//     smallBricks[c] = [];
+//     for (var r = 0; r < smallBrickRowCount; r++) {
+//         smallBricks[c][r] = { x: 0, y: 0, status: 1 };
+//     }
+// }
 
 // gestures
 document.addEventListener("keydown", keyDownHandler, false);
@@ -156,6 +158,16 @@ document.getElementById("leftBtn").addEventListener("pointerup", moveLeftStop);
 document.getElementById("rightBtn").addEventListener("pointerdown", moveright);
 document.getElementById("rightBtn").addEventListener("pointerup", moveRightStop);
 
+
+
+
+// document.getElementById("startBtn").addEventListener(
+//     'click',
+//     () => loadVideo(
+//       video,
+//       "./assets/images/go.mp4"
+//     )
+// )
 
 // function moveleft(e) {
 //     if (e.key == "Right" || e.key == "ArrowRight") {
@@ -209,33 +221,12 @@ function largeBricksCollisionDetection() {
 
                     b.status = 0;
                     score++;
-
-
-                }
-            }
-
-        }
-    }
-}
-
-
-// collision with smaller bricks
-function smallBricksCollisionDetection() {
-    for (var c = 0; c < smallBrickColumnCount; c++) {
-        for (var r = 0; r < smallBrickRowCount; r++) {
-            var b = smallBricks[c][r];
-            if (b.status == 1) {
-                if (x > b.x && x < b.x + smallBrickWidth && y > b.y && y < b.y + smallBrickHeight) {
-                    dy = -dy;
-
-                    b.status = 0;
-                    score++;
-                    if (score == 1) {
+                    if (score == totalLargeBricks) {
 
                         ballRadius = 0;
                         Swal.fire({
                             title: "!You Win",
-                            iconHtml: '<img src="./assets/images/win.jpg">',
+                            iconHtml: '<img src="./assets/images/lose.jpg">',
                             customClass: {
                                 icon: 'no-border'
                             },
@@ -262,6 +253,51 @@ function smallBricksCollisionDetection() {
         }
     }
 }
+
+
+// collision with smaller bricks
+// function smallBricksCollisionDetection() {
+//     for (var c = 0; c < smallBrickColumnCount; c++) {
+//         for (var r = 0; r < smallBrickRowCount; r++) {
+//             var b = smallBricks[c][r];
+//             if (b.status == 1) {
+//                 if (x > b.x && x < b.x + smallBrickWidth && y > b.y && y < b.y + smallBrickHeight) {
+//                     dy = -dy;
+
+//                     b.status = 0;
+//                     score++;
+//                     if (score == 1) {
+
+//                         ballRadius = 0;
+//                         Swal.fire({
+//                             title: "!You Win",
+//                             iconHtml: '<img src="./assets/images/win.jpg">',
+//                             customClass: {
+//                                 icon: 'no-border'
+//                             },
+//                             button:{
+//                                 text: "Play Again",
+//                                 value: true,
+//                                 visible: true,
+//                                 className: "",
+//                                 closeModal: true,
+//                               }
+
+//                         }).then((result) => {
+//                             // Reload the Page
+//                             location.reload();
+//                         });
+
+
+//                     }
+
+
+//                 }
+//             }
+
+//         }
+//     }
+// }
 
 
 
@@ -348,22 +384,19 @@ setTimeout(function () {
 
 
 
-
-
-
 function draw() {
 
 
     ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas before drawing the next ball otherwise it will look like the ballis leaving trails
     //startBtn.style.display = 'none';
     drawLargeBricks();
-    drawSmallBricks();
+    //drawSmallBricks();
     drawBall();
     drawPaddle();
     drawScore();
     drawLives();
     largeBricksCollisionDetection();
-    smallBricksCollisionDetection();
+    // smallBricksCollisionDetection();
     // for right and left wall
     if (x + dx + ballRadius >= canvas.width || x + dx - ballRadius <= 0) {
         dx = -dx;
@@ -431,9 +464,25 @@ function draw() {
         else if (y + dy > canvas.height - ballRadius) {
             lives--;
             if (!lives) {
-                alert("GAME OVER");
-                document.location.reload(); // to reload the current document
+                ballRadius = 0;
+                Swal.fire({
+                    title: "!You Lose",
+                    iconHtml: '<img src="./assets/images/lose.jpg">',
+                    customClass: {
+                        icon: 'no-border'
+                    },
+                    button:{
+                        text: "Play Again",
+                        value: true,
+                        visible: true,
+                        className: "",
+                        closeModal: true,
+                        }
 
+                }).then((result) => {
+                    // Reload the Page
+                    location.reload();
+                });
             }
             else {
                 x = canvas.width / 2;
@@ -480,7 +529,7 @@ function draw() {
 }
 
 
-setInterval(function () { draw(); }, 4000);
+setInterval(function () { draw(); }, 2000);
 
 
 

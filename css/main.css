@@ -1,12 +1,7 @@
-body {
-    background-color: whitesmoke;
-    
-}
-
 
 canvas {
     /* background: linear-gradient(to bottom, #0066cc 0%, #00cc66 100%); */
-    background-color: white;
+    background-color: lightskyblue;
 
     display: block;
 }
